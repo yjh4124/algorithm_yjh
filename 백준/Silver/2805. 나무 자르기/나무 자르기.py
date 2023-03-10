@@ -14,20 +14,16 @@ ls_tree=sorted([int(i) for i in input().split()], reverse=1)
 def bi_cut(ls_tree,cut_h,pre_cut,temp):
 
     temp=0
-    mindiff=0
     diff=(abs(cut_h-pre_cut+1)+1)//2
     # if diff==0: diff=1
         # cnt+=1
     up_cut=cut_h+diff
     down_cut=cut_h-diff
-    mindiff=0
     for i in ls_tree:
         if i>cut_h:
             temp+=i-cut_h
-            if mindiff<i-cut_h:
-                mindiff=i-cut_h
                 
-    if (((cut_h==pre_cut))&(temp>m))|(temp==m):
+    if ((cut_h==pre_cut)&(temp>m))|(temp==m):
         return print(cut_h)
     
     if temp>m: # 너무 낮게 자름
