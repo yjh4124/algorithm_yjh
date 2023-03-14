@@ -1,21 +1,24 @@
-# boj 2493 탑
-# stack
+import sys
 
-if __name__ == "__main__":
-    N = int(input())  # 탑의 개수
-    top_list = list(map(int, input().split()))  # 탑 리스트
-    stack = []
-    answer = []
+n=int(sys.stdin.readline())
 
-    for i in range(N):
-        while stack:
-            if stack[-1][1] > top_list[i]:  # 수신 가능한 상황
-                answer.append(stack[-1][0] + 1)
-                break
-            else:
-                stack.pop()
-        if not stack:  # 스택이 비면 레이저를 수신할 탑이 없다.
-            answer.append(0)
-        stack.append([i, top_list[i]])  # 인덱스, 값
+tower=[int(i) for i in sys.stdin.read().split()]
 
-    print(" ".join(map(str, answer)))
+r_tower=[]
+memo=[]
+
+cnt=0
+for i in range(n):
+    while memo:
+        if tower[i]<tower[memo[-1]]:
+            print(memo[-1]+1,end=' ')
+            memo.append(i)
+            # print(f'2--{memo}, {not memo}')
+            break
+        elif tower[i]>tower[memo[-1]]:
+            memo.pop()
+            # print(f'3--{memo}, {not memo}')  
+    if not memo:
+        print(0, end=' ')
+        memo.append(i)
+        # print(f'1--{memo}, {not memo}')  
