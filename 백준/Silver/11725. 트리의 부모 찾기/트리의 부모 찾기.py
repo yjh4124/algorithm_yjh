@@ -1,4 +1,5 @@
 import sys
+from collections import deque
 sys.setrecursionlimit(10**6)
 n = int(sys.stdin.readline())
 
@@ -9,8 +10,9 @@ for i in range(n-1):
     graph[a].append(b)
     graph[b].append(a)
 
+# print(graph)
 visited = [0]*(n+1)
-
+visited[1]=1
 arr = []
 
 def dfs(s):
