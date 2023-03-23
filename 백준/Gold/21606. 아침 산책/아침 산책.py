@@ -1,40 +1,47 @@
 import sys
+input = sys.stdin.readline
+sys.setrecursionlimit(10**9)
 
-n=int(sys.stdin.readline())
+def calPaths(graph: list, col: list) -> int:
+    count = 0
+    visited = set()
 
-data=[0]
-data+=list(map(int, sys.stdin.readline().strip()))
-edge=[]
+    def dfs(exterior: int) -> int:
+        cnt = 0
+        for neighbor in graph[exterior]:
+            if col[neighbor] == 1:
+                cnt += 1
+            else:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    cnt += dfs(neighbor)
+        return cnt
 
-for _ in range(n-1):
-    u, v=map(int,sys.stdin.readline().split())
-    edge.append((u, v))
+    for i in range(1, numVertices + 1):
+        # 각 실내별 인접한 실내 구하기
+        if col[i] == 1:
+            for j in graph[i]:
+                if col[j] == 1:
+                    count += 1
+        # 인접한 실외를 한 덩어리로 보고 그 덩어리에 인접한 실내의 수를 구한 뒤 
+        # 각 덩어리별로 n*(n-1)의 경우의 수를 계산
+        else:
+            if i not in visited:
+                visited.add(i)
+                tmp = dfs(i)
+                count += tmp * (tmp - 1)
+ 
+    return count
 
+if __name__ == '__main__':
+    numVertices = int(input())
+    col = list(map(int, list("0"+input().strip())))
 
-graph=[[] for _ in range(n+1)]
+    graph = [[] for _ in range(numVertices + 1)]
+    
+    for _ in range(1, numVertices):
+        v1, v2 = map(int, input().split())
+        graph[v1].append(v2)
+        graph[v2].append(v1)
 
-for u, v in edge:
-    graph[u].append(v)
-    graph[v].append(u)
-
-cnt=0
-def dfs(start):
-    global cnt
-    for next in graph[start]:
-        if visit[next]==0:
-            visit[next]=1
-            
-            if data[next]==1:
-                cnt+=1
-                continue
-            elif data[next]!=1:
-                dfs(next)
-
-
-for start in range(1, len(data)):
-    if data[start]==1:
-        visit=[0]*(n+1)
-        visit[start]=1
-        dfs(start)
-
-print(cnt)
+    print(calPaths(graph, col))
