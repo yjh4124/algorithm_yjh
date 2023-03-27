@@ -5,9 +5,7 @@ n, k = map(int, input().split())
 backpack=[]
 
 for idx in range(n):
-    backpack.append(tuple(map(int, sys.stdin.readline().split())))
-
-backpack.sort(key=lambda x:(x[0], x[1]))
+    backpack.append(tuple(map(int, input().split())))
 
 # print(backpack)
 
