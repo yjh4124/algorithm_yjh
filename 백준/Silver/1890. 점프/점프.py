@@ -3,7 +3,7 @@ import sys
 n = int(input())
 road=tuple(tuple(int(i) for i in sys.stdin.readline().split()) 
            for _ in range(n))
-graph = [[0] * n for _ in range(n)]
+graph=[[0 for _ in range(n)] for _ in range(n)]
 graph[0][0] = 1 
 
 for i in range(n):
