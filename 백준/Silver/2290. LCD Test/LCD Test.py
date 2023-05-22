@@ -1,5 +1,3 @@
-import sys
-
 s, n=input().split()
 
 # print(list(n))
@@ -19,7 +17,7 @@ for row in range(1, 2*s+4):
             if row==1: print(*([' ']+['-' for _ in range(s)]+[' ']+[' ']), sep='', end='')
             if 1<row<s+2: print(*([' ' for _ in range(s+1)]+['|']+[' ']), sep='', end='')
             if row==s+2: print(*([' ']+['-' for _ in range(s)]+[' ']+[' ']), sep='', end='')
-            if s+2<row<2*s+3: print(*(['|']+[' ' for _ in range(1)]+[' ' for _ in range(s)]+[' ']), sep='', end='')
+            if s+2<row<2*s+3: print(*(['|']+[' ' for _ in range(s+1)]+[' ']), sep='', end='')
             if row==2*s+3: print(*([' ']+['-' for _ in range(s)]+[' ']+[' ']), sep='', end='')
         
         elif num=="3":
@@ -38,14 +36,14 @@ for row in range(1, 2*s+4):
         
         elif num=="5":
             if row==1: print(*([' ']+['-' for _ in range(s)]+[' ']+[' ']), sep='', end='')
-            if 1<row<s+2: print(*(['|']+[' ' for _ in range(1)]+[' ' for _ in range(s)]+[' ']), sep='', end='')
+            if 1<row<s+2: print(*(['|']+[' ' for _ in range(s+1)]+[' ']), sep='', end='')
             if row==s+2: print(*([' ']+['-' for _ in range(s)]+[' ']+[' ']), sep='', end='')
             if s+2<row<2*s+3: print(*([' ' for _ in range(s+1)]+['|']+[' ']), sep='', end='')
             if row==2*s+3: print(*([' ']+['-' for _ in range(s)]+[' ']+[' ']), sep='', end='')
         
         elif num=="6":
             if row==1: print(*([' ']+['-' for _ in range(s)]+[' ']+[' ']), sep='', end='')
-            if 1<row<s+2: print(*(['|']+[' ' for _ in range(1)]+[' ' for _ in range(s)]+[' ']), sep='', end='')
+            if 1<row<s+2: print(*(['|']+[' ' for _ in range(s+1)]+[' ']), sep='', end='')
             if row==s+2: print(*([' ']+['-' for _ in range(s)]+[' ']+[' ']), sep='', end='')
             if s+2<row<2*s+3: print(*(['|']+[' ' for _ in range(s)]+['|']+[' ']), sep='', end='')
             if row==2*s+3: print(*([' ']+['-' for _ in range(s)]+[' ']+[' ']), sep='', end='')
