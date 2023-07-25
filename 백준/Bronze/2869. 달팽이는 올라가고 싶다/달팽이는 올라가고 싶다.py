@@ -1,6 +1,6 @@
-a, b, v = map(int,input().split())
+A, B, V=map(int,input().split())
 
-if (v-b)%(a-b)==0: day=(v-b)//(a-b)
-else: day=(v-b)//(a-b)+1
-        
-print(day)
+def getDate(A, B, V):
+    return print((V-B-1)//(A-B)+1)
+
+getDate(A, B, V)
