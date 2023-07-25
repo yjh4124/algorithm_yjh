@@ -1,6 +1,6 @@
 T= int(input())
 
-def makePrimeList(num):
+def makePrimeSet(num):
     primeNum={i for i in range(2,num+1)}
 
     for i in range(2, int(num**0.5)+1):
@@ -12,7 +12,7 @@ def makePrimeList(num):
     
     return primeNum
 
-primeNum=makePrimeList(10000)
+primeNum=makePrimeSet(10000)
 
 def getGoldbachPartition(num):
     for i in range(num//2, 1, -1):
@@ -21,3 +21,4 @@ def getGoldbachPartition(num):
 
 for _ in range(0, T):
     getGoldbachPartition(int(input()))
+
