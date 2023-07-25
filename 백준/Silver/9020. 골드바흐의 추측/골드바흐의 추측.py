@@ -15,10 +15,12 @@ def makePrimeSet(num):
 primeNum=makePrimeSet(10000)
 
 def getGoldbachPartition(num):
-    for i in range(num//2, 1, -1):
+    if num==4: return print(2, 2)
+    
+    startNum=num//2 if (num//2)%2==1 else num//2-1
+    for i in range(startNum, 1, -2):
         if (i in primeNum) and (num-i in primeNum):
             return print(i, num-i)
 
 for _ in range(0, T):
     getGoldbachPartition(int(input()))
-
