@@ -1,13 +1,14 @@
 import sys
-input = sys.stdin.readline
-num = int(input())
-arr = [0]*10000
 
-for i in range(num):
-    a = int(input())
-    arr[a-1] += 1
+n=int(input())
+
+def ascendingOrder(n):
+    numList=[0]*10001
+    for _ in range(n):
+        numList[int(sys.stdin.readline())]+=1
     
-for i in range(10000):
-    if arr[i] != 0:
-        for j in range(arr[i]):
-            print(i+1)
+    for idx in range(0,10001):
+        if numList[idx]!=0: 
+            for _ in range(numList[idx]): print(idx)
+
+ascendingOrder(n)
