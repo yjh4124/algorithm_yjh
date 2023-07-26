@@ -2,11 +2,11 @@ n=int(input())
 k=int(input())
 cards=[input() for _ in range(0, n)]
 
-permCards=[]
+permCards=set()
 idxArr=[0]*(n+1)
 
 def makePermCards(k, string_, idxArr):
-    if k==0: permCards.append(string_)
+    if k==0: permCards.add(string_)
     elif k>0:
         for idx in range(0, n):
             if idxArr[idx]==0:
@@ -16,4 +16,4 @@ def makePermCards(k, string_, idxArr):
 
 makePermCards(k, '', idxArr)
 
-print(len(set(permCards)))
+print(len(permCards))
