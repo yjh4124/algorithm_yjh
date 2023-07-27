@@ -1,7 +1,10 @@
 import sys
 
 n=int(input())
-strList=[sys.stdin.readline().strip() for _ in range(n)]
+strLenList=[[] for _ in range(51)]
+for _ in range(n):
+    word=sys.stdin.readline().strip()
+    strLenList[len(word)].append(word)
 
 def mergeSort(array):
     if len(array)>=2:
@@ -22,26 +25,19 @@ def merge(leftArr, rightArr):
     mergeArr=[]
 
     while leftId<leftlen and rightId<rightlen:
-        if len(leftArr[leftId])<len(rightArr[rightId]):
-            mergeArr.append(leftArr[leftId])
-            leftId+=1
-        elif len(leftArr[leftId])>len(rightArr[rightId]): 
-            mergeArr.append(rightArr[rightId])
-            rightId+=1
-        elif len(leftArr[leftId])==len(rightArr[rightId]): 
-            for idx in range(len(leftArr[leftId])):
-                if ord(leftArr[leftId][idx])<ord(rightArr[rightId][idx]):
-                    mergeArr.append(leftArr[leftId])
-                    leftId+=1
-                    break
-                elif ord(leftArr[leftId][idx])>ord(rightArr[rightId][idx]):
-                    mergeArr.append(rightArr[rightId])
-                    rightId+=1
-                    break
-                elif ord(leftArr[leftId][idx])==ord(rightArr[rightId][idx]) and (idx==len(leftArr[leftId])-1):
-                    mergeArr.append(leftArr[leftId])
-                    leftId+=1
-                    rightId+=1
+        for idx in range(len(leftArr[leftId])):
+            if ord(leftArr[leftId][idx])<ord(rightArr[rightId][idx]):
+                mergeArr.append(leftArr[leftId])
+                leftId+=1
+                break
+            elif ord(leftArr[leftId][idx])>ord(rightArr[rightId][idx]):
+                mergeArr.append(rightArr[rightId])
+                rightId+=1
+                break
+            elif ord(leftArr[leftId][idx])==ord(rightArr[rightId][idx]) and (idx==len(leftArr[leftId])-1):
+                mergeArr.append(leftArr[leftId])
+                leftId+=1
+                rightId+=1
 
     while leftId<leftlen:
         mergeArr.append(leftArr[leftId])
@@ -53,5 +49,7 @@ def merge(leftArr, rightArr):
 
     return mergeArr
 
-for i in mergeSort(strList):
-    print(i)
+for strList in strLenList:
+    if len(strList)!=0:
+        for i in mergeSort(strList):
+            print(i)
