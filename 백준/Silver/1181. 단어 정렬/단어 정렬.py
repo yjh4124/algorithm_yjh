@@ -1,10 +1,10 @@
 import sys
 
 n=int(input())
-strLenList=[[] for _ in range(51)]
+strLenList=[set() for _ in range(51)]
 for _ in range(n):
     word=sys.stdin.readline().strip()
-    strLenList[len(word)].append(word)
+    strLenList[len(word)].add(word)
 
 def mergeSort(array):
     if len(array)>=2:
@@ -51,5 +51,5 @@ def merge(leftArr, rightArr):
 
 for strList in strLenList:
     if len(strList)!=0:
-        for i in mergeSort(strList):
+        for i in mergeSort(list(strList)):
             print(i)
