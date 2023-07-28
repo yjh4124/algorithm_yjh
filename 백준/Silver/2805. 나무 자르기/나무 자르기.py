@@ -1,36 +1,29 @@
 import sys
-# sys.setrecursionlimit(10**8)
-n, m=[int(i) for i in sys.stdin.readline().split()]
+from collections import Counter
 
-# print(n)
-# print(m)
+n, m=map(int, input().split())
+trees=Counter(map(int, sys.stdin.readline().split()))
 
-ls_tree=sorted([int(i) for i in input().split()], reverse=1)
+def setHeight():
+    lowHeight=0
+    highHeight=max(trees)
 
-# print(m)
-# print(ls_tree)
+    while lowHeight<=highHeight:
+        midHeight=(lowHeight+highHeight)//2
+        
+        if getTrees(midHeight)==m: return print(midHeight)
+        else:
+            if getTrees(midHeight)>m: 
+                lowHeight=midHeight+1
+            else: highHeight=midHeight-1
+        
+    return print(highHeight)
 
-          
-def bi_cut(ls_tree,cut_h,pre_cut,temp):
+def getTrees(height):
+    total=0
+    for tree, cnt in trees.items():
+        if tree>height: total+=(tree-height)*cnt
 
-    temp=0
-    diff=(abs(cut_h-pre_cut+1)+1)//2
-    # if diff==0: diff=1
-        # cnt+=1
-    up_cut=cut_h+diff
-    down_cut=cut_h-diff
-    for i in ls_tree:
-        if i>cut_h:
-            temp+=i-cut_h
-                
-    if ((cut_h==pre_cut)&(temp>m))|(temp==m):
-        return print(cut_h)
-    
-    if temp>m: # 너무 낮게 자름
-        # print(f'{cut_h}--{temp}')
-        bi_cut(ls_tree, up_cut, cut_h,temp)
-    else: # 너무 높게 자름
-        # print(f'{cut_h}--{temp}')
-        bi_cut(ls_tree, down_cut, cut_h,temp)
+    return total
 
-bi_cut(ls_tree,ls_tree[0]//2, ls_tree[0],0)
+setHeight()
