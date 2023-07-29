@@ -1,16 +1,10 @@
-import sys
+a, b, c= map(int, input().split())
 
-a, b, c= map(int, sys.stdin.readline().split())
-
-def multi(a, n):
-    if n==1:
-        return a%c
-    
+def getMod(a, b):
+    if b==1: return a%c
     else:
-        tmp = multi(a, n//2)
-        if n%2==0:
-            return(tmp*tmp)%c
-        else:
-            return(tmp*tmp*a)%c
-        
-print(multi(a,b))
+        partMod=getMod(a,b//2)
+        if b%2==0: return (partMod*partMod)%c
+        elif b%2==1: return (partMod*partMod*a)%c
+
+print(getMod(a,b))
