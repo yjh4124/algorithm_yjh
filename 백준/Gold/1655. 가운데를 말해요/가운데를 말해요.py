@@ -23,7 +23,7 @@ def getMidNum():
             heapq.heappush(heapR, tempR)
             heapq.heappush(heapL, -tempL)
             
-        print(min(-heapL[0], heapR[0]))
+        print(-heapL[0])
 
 for _ in range(n):
     getMidNum()
