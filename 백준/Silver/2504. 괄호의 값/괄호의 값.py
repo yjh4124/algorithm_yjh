@@ -1,47 +1,33 @@
-ps=input()
-# print(ps)
+str_=input()
 
-stack=[]
-cntx=0
-cnty=0
-result=0
-precheck=''
+def checkValVPS(str_):
+    stackVPS=[]
+    total=0
+    tempTotal=0
+    temp=1
 
-for i in ps:
-    
-    if (cntx==-1) | (cnty==-1):
-        print(0)
-        break
+    for idx in range(len(str_)):
+        char_=str_[idx]
+        if char_=='(':
+            temp*=2
+            stackVPS.append(char_)
+        elif char_==')':
+            if str_[idx-1]=='(': tempTotal+=temp
+            temp//=2
+            if stackVPS and stackVPS[-1]=='(': stackVPS.pop()
+            else: return print(0)
+        elif char_=='[':
+            temp*=3
+            stackVPS.append(char_)
+        elif char_==']':
+            if str_[idx-1]=='[': tempTotal+=temp
+            temp//=3
+            if stackVPS and stackVPS[-1]=='[': stackVPS.pop()
+            else: return print(0)
 
-    if i=='(':
-        cntx+=1
-        precheck='('
-    elif i=='[':
-        cnty+=1
-        precheck='['
-    elif i==')':
-        if (precheck=='('):
-            tempx=pow(2,cntx)
-            tempy=pow(3,cnty)
-            result+=tempx*tempy
-            # print(result)
-        if (precheck=='['):
-            print(0)
-            break
-        precheck=')'
-        cntx-=1
-    elif i==']':
-        if (precheck=='['):
-            tempx=pow(2,cntx)
-            tempy=pow(3,cnty)
-            result+=tempx*tempy
-            # print(result)
-        if (precheck=='('):
-            print(0)
-            break
-        precheck=']'
-        cnty-=1
-else: 
-    if (cntx==0) & (cnty==0):
-        print(result)
-    else: print(0)
+        if not stackVPS: total+=tempTotal; tempTotal=0
+
+    if not stackVPS: return print(total)
+    else: return print(0)
+
+checkValVPS(str_)
