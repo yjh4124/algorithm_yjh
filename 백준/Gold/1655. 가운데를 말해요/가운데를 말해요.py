@@ -1,6 +1,7 @@
 from collections import deque
 import heapq
 import sys
+
 n=int(input())
 heapL=[]
 heapR=[]
@@ -10,7 +11,9 @@ def getMidNum():
     if len(heapL)==len(heapR): heapq.heappush(heapL, -num)
     else: heapq.heappush(heapR, num)
 
-    if heapL and heapR: 
+    if not heapL: print(heapR[0])
+    elif not heapR: print(-heapL[0])
+    else:
         tempL=-heapq.heappop(heapL)
         tempR=heapq.heappop(heapR)
         if tempL>tempR:
@@ -21,8 +24,6 @@ def getMidNum():
             heapq.heappush(heapL, -tempL)
             
         print(min(-heapL[0], heapR[0]))
-    elif heapL: print(-heapL[0])
-    else: print(heapR[0])
 
 for _ in range(n):
     getMidNum()
