@@ -14,15 +14,9 @@ def getMidNum():
     if not heapL: print(heapR[0])
     elif not heapR: print(-heapL[0])
     else:
-        tempL=-heapq.heappop(heapL)
-        tempR=heapq.heappop(heapR)
-        if tempL>tempR:
-            heapq.heappush(heapR, tempL)
-            heapq.heappush(heapL, -tempR)
-        else:
-            heapq.heappush(heapR, tempR)
-            heapq.heappush(heapL, -tempL)
-            
+        if -heapL[0]>heapR[0]:
+            heapq.heappush(heapR, -heapq.heappop(heapL))
+            heapq.heappush(heapL, -heapq.heappop(heapR))
         print(-heapL[0])
 
 for _ in range(n):
