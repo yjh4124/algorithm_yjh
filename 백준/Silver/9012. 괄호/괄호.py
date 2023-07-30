@@ -1,30 +1,17 @@
+import sys
+
 n=int(input())
 
-for i in range(n):
-    ps=list(input())
-    cnt=0
-    init=0
-    for j in ps:
-        if init==0:
-            if j=='(':
-                cnt+=1
-                init=1
-            else: 
-                print('NO')
-                break
+def checkVPS(str_):
+    stack=[]
+    for char_ in str_:
+        if char_=='(': stack.append(char_)
         else:
-            if j=='(':
-                cnt+=1
-                init=1
-            elif j==')':
-                if cnt!=0:
-                    cnt-=1
-                else:
-                    print('NO')
-                    break
-    else:
-        if cnt==0:
-            print('YES')
-        else: 
-            # print(1)
-            print('NO')
+            if len(stack)!=0: stack.pop()
+            else: return print('NO')
+            
+    if len(stack)==0: return print('YES')
+    else: return print('NO')
+
+for _ in range(n):
+    checkVPS(sys.stdin.readline().strip())
