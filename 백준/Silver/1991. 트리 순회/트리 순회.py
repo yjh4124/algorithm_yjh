@@ -1,51 +1,31 @@
-import sys
+n=int(input())
+trees={}
 
-n = int(input())
+def getDict(trees):
+    for _ in range(n):
+        parent, left, right=input().split()
+        trees[parent]=[left, right]
+    return trees
 
-tree = {}
+trees=getDict(trees)
 
-# print(ls)
+def preorder(root):
+    if root!='.': print(root,end='')
+    if trees[root][0]!='.': preorder(trees[root][0])
+    if trees[root][1]!='.': preorder(trees[root][1])
 
-def preorder(tree,node):
+def inorder(root):
+    if trees[root][0]!='.': inorder(trees[root][0])
+    if root!='.': print(root,end='')
+    if trees[root][1]!='.': inorder(trees[root][1])
 
-    for data in tree.items():
-        
-        if data[0]==node:
-            print(node,end='')
-            if data[1][0]!='.':
-                preorder(tree, data[1][0])
-            if data[1][1]!='.':
-                preorder(tree, data[1][1])
+def postorder(root):
+    if trees[root][0]!='.': postorder(trees[root][0])
+    if trees[root][1]!='.': postorder(trees[root][1])
+    if root!='.': print(root,end='')
 
-
-def inorder(tree,node):
-    for data in tree.items():
-        
-        if data[0]==node:
-            if data[1][0]!='.':
-                inorder(tree, data[1][0])
-            print(node,end='')
-            if data[1][1]!='.':
-                inorder(tree, data[1][1])
-
-def postorder(tree,node):
-    for data in tree.items():
-        
-        if data[0]==node:
-            if data[1][0]!='.':
-                postorder(tree, data[1][0])
-            if data[1][1]!='.':
-                postorder(tree, data[1][1])
-            print(node,end='')
-
-for i in range(n):
-
-    node, left, right = [i for i in sys.stdin.readline().split()]
-
-    tree[node]=[left, right]
-
-preorder(tree, list(tree.keys())[0])
-print('')
-inorder(tree, list(tree.keys())[0])
-print('')
-postorder(tree, list(tree.keys())[0])
+preorder('A')
+print()
+inorder('A')
+print()
+postorder('A')
