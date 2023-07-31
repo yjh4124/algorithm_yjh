@@ -1,7 +1,7 @@
 import sys
 sys.setrecursionlimit(10**9)
 
-preorder = tuple(map(int, sys.stdin.readlines()))
+preorder= tuple(map(int, sys.stdin.readlines()))
 
 def postorder(start, end):
     if start>end: return
@@ -9,7 +9,8 @@ def postorder(start, end):
     root = preorder[start]
     rightIdx = start + 1
     
-    while rightIdx <= end and preorder[rightIdx] < root:
+    while rightIdx <= end:
+        if preorder[rightIdx] > root: break
         rightIdx += 1
 
     postorder(start+1, rightIdx-1)
