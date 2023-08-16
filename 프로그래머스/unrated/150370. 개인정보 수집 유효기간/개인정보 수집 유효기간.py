@@ -4,11 +4,9 @@ def solution(today, terms, privacies):
     todayValue= year*28*12 + month*28 + day
 
     answer = []
-    
     for idx, privacy in enumerate(privacies):
         expiredValue= getExpiredValue(privacy, terms)
-        if expiredValue <= todayValue:
-            answer.append(idx+1)
+        if expiredValue <= todayValue: answer.append(idx+1)
     
     return answer
 
