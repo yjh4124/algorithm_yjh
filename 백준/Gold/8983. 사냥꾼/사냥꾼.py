@@ -1,3 +1,4 @@
+
 # 입력 받기
 M, N, L = map(int, input().split())
 gun_positions = list(map(int, input().split()))
