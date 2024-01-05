@@ -1,15 +1,29 @@
 import sys
+
 input = sys.stdin.readline
 
+
+def getMaxNum(num, n, k):
+    stack = []
+
+    for digit in num:
+        while stack and k > 0 and stack[-1] < digit:
+            stack.pop()
+            k -= 1
+
+        stack.append(digit)
+
+    if k > 0:
+        maxNum = "".join(stack[:-k])
+    else:
+        maxNum = "".join(stack)
+
+    return maxNum
+
+
 n, k = map(int, input().split())
-numbers = input().rstrip()
-stack = []
-for number in numbers:
-    while stack and stack[-1] < number and k > 0:
-        stack.pop()
-        k -= 1
-    stack.append(number)
-if k > 0:
-    print(''.join(stack[:-k]))
-else:
-    print(''.join(stack))
+num = input().strip()
+
+maxNum = getMaxNum(num, n, k)
+
+print(maxNum)
