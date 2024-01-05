@@ -1,28 +1,40 @@
-#16564_히오스 프로그래머_binary search_silver1
 
 import sys
+
 input = sys.stdin.readline
 
-n, k = map(int,input().split())
-levels = [ int(input()) for _ in range(n)]
 
-start = min(levels)
-end = start + k
+def getMinimumTeamLevel(x_levels, k_level):
+    sorted_levels = sorted(x_levels)
+    minLevel = min(sorted_levels)
+    maxLevel = max(sorted_levels) + k_level
+    mid = (minLevel + maxLevel) // 2
 
-res = 0
-while start <= end:
-    mid = (start + end) // 2
-    
-    hap = 0
-    for level in levels:
-        if mid > level:
-           hap+= (mid - level)
-           
-    if hap <= k:
-        start = mid+1
-        res = max(mid,res)
-    else:
-        end = mid -1
+    while minLevel <= maxLevel:
+        sum = 0
+        for level in x_levels:
+            if mid > level:
+                sum += mid - level
+                if sum > k_level:
+                    break
+
+        if sum > k_level:
+            maxLevel = mid - 1
+        elif sum < k_level:
+            minLevel = mid + 1
+        elif sum == k_level:
+            break
+
+        mid = (minLevel + maxLevel) // 2
+
+    tLevel = mid
+
+    return tLevel
 
 
-print(res)
+n, k = map(int, (input().split()))
+x_levels = [int(input().strip()) for _ in range(n)]
+
+tLevel = getMinimumTeamLevel(x_levels, k)
+
+print(tLevel)
