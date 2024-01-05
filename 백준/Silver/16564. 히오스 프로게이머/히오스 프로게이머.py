@@ -6,8 +6,8 @@ input = sys.stdin.readline
 
 def getMinimumTeamLevel(x_levels, k_level):
     sorted_levels = sorted(x_levels)
-    minLevel = min(sorted_levels)
-    maxLevel = max(sorted_levels) + k_level
+    minLevel = sorted_levels[0]
+    maxLevel = sorted_levels[-1] + k_level
     mid = (minLevel + maxLevel) // 2
 
     while minLevel <= maxLevel:
