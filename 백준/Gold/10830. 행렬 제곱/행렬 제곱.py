@@ -1,3 +1,4 @@
+
 import sys
 
 input = sys.stdin.readline
@@ -11,9 +12,6 @@ def getPowMatrix(a_matrix, n, b):
                 matrix[i][j] = a_matrix[i][j] % 1000
         return matrix
 
-    if b == 2:
-        return getMulMatrix(a_matrix, a_matrix, n)
-
     halfPowMatrix = getPowMatrix(a_matrix, n, b // 2)
     if b % 2 == 0:
         return getMulMatrix(
@@ -22,11 +20,15 @@ def getPowMatrix(a_matrix, n, b):
             n,
         )
     else:
-        return getMulMatrix(getMulMatrix(
-            halfPowMatrix,
-            halfPowMatrix,
+        return getMulMatrix(
+            getMulMatrix(
+                halfPowMatrix,
+                halfPowMatrix,
+                n,
+            ),
+            a_matrix,
             n,
-        ), a_matrix, n)
+        )
 
 
 def getMulMatrix(matrix1, matrix2, n):
