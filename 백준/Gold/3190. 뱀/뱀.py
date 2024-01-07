@@ -6,51 +6,40 @@ input = sys.stdin.readline
 
 
 def getTimeEnd(n, apples, controls):
+    snake_set = set([(1, 1)]) 
     snakes = deque([(1, 1)])
-    # 상, 우, 하, 좌
-    # ((-1, 0), (0, 1), (1, 0), (0, -1))
     direction = (0, 1)
     time = 0
 
-    while 1:
+    while True:
         time += 1
-        nextRow = snakes[-1][0] + direction[0]
-        nextCol = snakes[-1][1] + direction[1]
+        nextRow, nextCol = snakes[-1][0] + direction[0], snakes[-1][1] + direction[1]
         nextHead = (nextRow, nextCol)
 
-        if nextRow >= 1 and nextRow <= n and nextCol >= 1 and nextCol <= n:
-            if nextHead not in snakes:
-                snakes.append(nextHead)
-            else:
-                break
+        if 1 <= nextRow <= n and 1 <= nextCol <= n and nextHead not in snake_set:
+            snakes.append(nextHead)
+            snake_set.add(nextHead) 
         else:
             break
 
         direction = getNextDirection(direction, time, controls)
 
         if nextCol not in apples[nextRow]:
-            snakes.popleft()
+            tail = snakes.popleft()
+            snake_set.remove(tail) 
         else:
             del apples[nextRow][nextCol]
 
-    timeEnd = time
-    return timeEnd
+    return time
 
 
 def getNextDirection(direction, time, controls):
     if time in controls:
         if controls[time] == "L":
-            direction = (
-                direction[0] * 0 + direction[1] * -1,
-                direction[0] * 1 + direction[1] * 0,
-            )
+            direction = (-direction[1], direction[0])
         elif controls[time] == "D":
-            direction = (
-                direction[0] * 0 + direction[1] * 1,
-                direction[0] * -1 + direction[1] * 0,
-            )
-    nextDirection = direction
-    return nextDirection
+            direction = (direction[1], -direction[0])
+    return direction
 
 
 n = int(input())
@@ -67,5 +56,4 @@ for _ in range(l):
     controls[int(time)] = command
 
 timeEnd = getTimeEnd(n, apples, controls)
-
 print(timeEnd)
