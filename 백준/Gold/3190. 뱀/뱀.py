@@ -6,27 +6,27 @@ input = sys.stdin.readline
 
 
 def getTimeEnd(n, apples, controls):
-    snake_set = set([(1, 1)]) 
-    snakes = deque([(1, 1)])
+    snake_set = set([(1, 1)])
+    snake = deque([(1, 1)])
     direction = (0, 1)
     time = 0
 
     while True:
         time += 1
-        nextRow, nextCol = snakes[-1][0] + direction[0], snakes[-1][1] + direction[1]
+        nextRow, nextCol = snake[-1][0] + direction[0], snake[-1][1] + direction[1]
         nextHead = (nextRow, nextCol)
 
         if 1 <= nextRow <= n and 1 <= nextCol <= n and nextHead not in snake_set:
-            snakes.append(nextHead)
-            snake_set.add(nextHead) 
+            snake.append(nextHead)
+            snake_set.add(nextHead)
         else:
             break
 
         direction = getNextDirection(direction, time, controls)
 
         if nextCol not in apples[nextRow]:
-            tail = snakes.popleft()
-            snake_set.remove(tail) 
+            tail = snake.popleft()
+            snake_set.remove(tail)
         else:
             del apples[nextRow][nextCol]
 
