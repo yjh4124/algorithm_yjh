@@ -48,13 +48,14 @@ def makeNextS(r, c, maps, locD, locS, locW):
             (rIdx, cIdx - 1),
             (rIdx, cIdx + 1),
         ]:
-            if (nr, nc) == locD:
-                checkArival = True
-                return checkArival, newQueue
+            if 0 <= nr < r and 0 <= nc < c:
+                if maps[nr][nc] == "D":
+                    checkArival = True
+                    return checkArival, newQueue
 
-            if 0 <= nr < r and 0 <= nc < c and maps[nr][nc] == ".":
-                maps[nr][nc] = "S"
-                newQueue.append((nr, nc))
+                if maps[nr][nc] == ".":
+                    maps[nr][nc] = "S"
+                    newQueue.append((nr, nc))
 
     return checkArival, newQueue
 
