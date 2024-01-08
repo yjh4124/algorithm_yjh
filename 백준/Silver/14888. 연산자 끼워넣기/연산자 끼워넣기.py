@@ -1,3 +1,4 @@
+
 import sys
 
 input = sys.stdin.readline
@@ -6,6 +7,10 @@ INF = int(1e9)
 
 def getRes(operators, digitIdx, lastCalcRes):
     global maxRes, minRes
+
+    if (tuple(operators), digitIdx, lastCalcRes) in memo:
+        return
+
     for operatorIdx in range(4):
         if operators[operatorIdx] >= 1:
             nextCalcRes = getNextCalcRes(lastCalcRes, digitIdx, operatorIdx)
@@ -16,6 +21,8 @@ def getRes(operators, digitIdx, lastCalcRes):
             if digitIdx != n:
                 getRes(operators, digitIdx + 1, nextCalcRes)
             operators[operatorIdx] += 1
+
+    memo[(tuple(operators), digitIdx, lastCalcRes)] = lastCalcRes
 
 
 def getNextCalcRes(lastCalcRes, digitIdx, operatorIdx):
@@ -36,6 +43,7 @@ def getNextCalcRes(lastCalcRes, digitIdx, operatorIdx):
 n = int(input())
 digitsA = [int(i) for i in input().split()]
 operators = [int(i) for i in input().split()]  # +, -, x, /
+memo = {}
 
 maxRes = -INF
 minRes = INF
