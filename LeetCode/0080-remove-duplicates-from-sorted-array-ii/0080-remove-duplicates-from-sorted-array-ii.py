@@ -4,17 +4,17 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        i = 1
-        tmp = 0
-        while i < len(nums):
-            if nums[i - 1] == nums[i]:
-                if tmp == 1:
-                    nums.pop(i)
-                    i -= 1
+        cnt=1
+        for idx, num in enumerate(nums):
+                
+            if idx+1<=len(nums)-1:
+                if nums[idx]==nums[idx+1]:
+                    cnt+=1
                 else:
-                    tmp += 1
-            else:
-                tmp = 0
-            i += 1
-        return len(nums)
-        
+                    cnt=1
+            
+            if cnt==3:
+                while idx+1<=len(nums)-1 and nums[idx]==nums[idx+1]:
+                    nums.pop(idx)
+                cnt=1
+                
