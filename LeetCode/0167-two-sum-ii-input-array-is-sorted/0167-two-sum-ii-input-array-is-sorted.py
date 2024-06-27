@@ -19,5 +19,3 @@ class Solution(object):
                     lidx += 1
                 else:
                     return [lidx + 1, ridx + 1]
-
-        return []
