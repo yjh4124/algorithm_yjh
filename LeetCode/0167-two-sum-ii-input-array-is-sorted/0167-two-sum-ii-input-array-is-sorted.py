@@ -5,17 +5,14 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        n = len(numbers)
-
-        for i in range(n):
-            lidx = i
-            ridx = n - 1
-
-            while lidx < ridx:
-                twosum = numbers[lidx] + numbers[ridx]
-                if twosum > target:
-                    ridx -= 1
-                elif twosum < target:
-                    lidx += 1
-                else:
-                    return [lidx + 1, ridx + 1]
+        left, right = 0, len(numbers) - 1
+        
+        while left < right:
+            twosum = numbers[left] + numbers[right]
+            if twosum == target:
+                return [left + 1, right + 1]  
+            elif twosum < target:
+                left += 1
+            else:
+                right -= 1
+                
