@@ -8,15 +8,15 @@ class Solution(object):
         nRow=len(matrix)
         nCol=len(matrix[0])
         
-        excludeRow=set()
         excludeCol=set()
         
         for row in range(nRow):
+            checkZeroInRow=False
             for col in range(nCol):
                 if matrix[row][col]==0:
-                    excludeRow.add(row)
+                    checkZeroInRow=True
                     excludeCol.add(col)
-            if row in excludeRow:
+            if checkZeroInRow:
                 matrix[row]=[0 for _ in range(nCol)]
             
         for col in excludeCol:
