@@ -16,10 +16,9 @@ class Solution(object):
                 if matrix[row][col]==0:
                     excludeRow.add(row)
                     excludeCol.add(col)
-                
-        for row in excludeRow:
-            matrix[row]=[0 for _ in range(nCol)]
-        
+            if row in excludeRow:
+                matrix[row]=[0 for _ in range(nCol)]
+            
         for col in excludeCol:
             for row in range(nRow):
                 matrix[row][col]=0
