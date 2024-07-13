@@ -17,9 +17,10 @@ class Solution(object):
                     checkZeroInRow=True
                     excludeCol.add(col)
             if checkZeroInRow:
-                matrix[row]=[0 for _ in range(nCol)]
+                matrix[row]=[0]*nCol
             
         for col in excludeCol:
             for row in range(nRow):
                 matrix[row][col]=0
+                
         
