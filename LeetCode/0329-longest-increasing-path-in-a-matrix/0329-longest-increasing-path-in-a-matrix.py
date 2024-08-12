@@ -4,35 +4,33 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: int
         """
-        
-        self.m=len(matrix)
-        self.n=len(matrix[0])
-        
-        self.matrix=matrix
-        self.memo_path=[[0]*self.n for _ in range(self.m)]
+        self._initialize(matrix)
         
         longest_path=0
-        # Start search from each element on m*n matrix. 
+        
+        # Start search from each element in m*n matrix. 
         for i in range(self.m):
             for j in range(self.n):
                 if not self.memo_path[i][j]:
-                    self.memo_path[i][j]=self._dfs(i, j)
-                    longest_path=max(longest_path, self.memo_path[i][j])
+                    longest_path=max(longest_path, self._dfs(i, j))
                     
         return longest_path
     
-    # DFS
-    def _dfs(self, row, col):
-        if self.memo_path[row][col]:
-            return self.memo_path[row][col]
+    def _initialize(self, matrix):
+        self.m=len(matrix)
+        self.n=len(matrix[0])
+        self.matrix=matrix
+        self.memo_path=[[0]*self.n for _ in range(self.m)]
         
-        i, j=(row, col)
+    def _dfs(self, i, j):
+        if self.memo_path[i][j]:
+            return self.memo_path[i][j]
+        
         current_value=self.matrix[i][j]
-        
         max_path_length=1
         
         # up, right, down, left
-        directions=[[-1, 0], [0, 1], [1, 0], [0, -1]]
+        directions=((-1, 0), (0, 1), (1, 0), (0, -1))
         
         for di, dj in directions:
             ni=i+di
@@ -44,7 +42,7 @@ class Solution(object):
                 if next_value>current_value:    
                     max_path_length=max(max_path_length, 1+self._dfs(ni, nj))
             
-        self.memo_path[row][col]=max_path_length
+        self.memo_path[i][j]=max_path_length
         
         return max_path_length
         
