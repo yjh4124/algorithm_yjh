@@ -4,46 +4,29 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: int
         """
-        self._initialize(matrix)
+        m, n = len(matrix), len(matrix[0])
+        memo_path = [[0] * n for _ in range(m)]
+        longest_path = 0
         
-        longest_path=0
+        def _dfs(i, j):
+            if memo_path[i][j]:
+                return memo_path[i][j]
+            
+            current_value = matrix[i][j]
+            max_path_length = 1
+            
+            directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+            for di, dj in directions:
+                ni, nj = i + di, j + dj
+                if 0 <= ni < m and 0 <= nj < n and matrix[ni][nj] > current_value:
+                    max_path_length = max(max_path_length, 1 + _dfs(ni, nj))
+            
+            memo_path[i][j] = max_path_length
+            return max_path_length
         
-        # Start search from each element in m*n matrix. 
-        for i in range(self.m):
-            for j in range(self.n):
-                if not self.memo_path[i][j]:
-                    longest_path=max(longest_path, self._dfs(i, j))
+        for i in range(m):
+            for j in range(n):
+                if not memo_path[i][j]:
+                    longest_path = max(longest_path, _dfs(i, j))
                     
         return longest_path
-    
-    def _initialize(self, matrix):
-        self.m=len(matrix)
-        self.n=len(matrix[0])
-        self.matrix=matrix
-        self.memo_path=[[0]*self.n for _ in range(self.m)]
-        
-    def _dfs(self, i, j):
-        if self.memo_path[i][j]:
-            return self.memo_path[i][j]
-        
-        current_value=self.matrix[i][j]
-        max_path_length=1
-        
-        # up, right, down, left
-        directions=((-1, 0), (0, 1), (1, 0), (0, -1))
-        
-        for di, dj in directions:
-            ni=i+di
-            nj=j+dj
-
-            if 0<=ni<self.m and 0<=nj<self.n:
-                next_value=self.matrix[ni][nj]
-                
-                if next_value>current_value:    
-                    max_path_length=max(max_path_length, 1+self._dfs(ni, nj))
-            
-        self.memo_path[i][j]=max_path_length
-        
-        return max_path_length
-        
-        
