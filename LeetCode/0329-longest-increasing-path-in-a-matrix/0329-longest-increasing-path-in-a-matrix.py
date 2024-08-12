@@ -24,6 +24,7 @@ class Solution(object):
             memo_path[i][j] = max_path_length
             return max_path_length
         
+        # Start search from each element in m*n matrix.
         for i in range(m):
             for j in range(n):
                 if not memo_path[i][j]:
