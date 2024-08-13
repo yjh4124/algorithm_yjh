@@ -21,8 +21,9 @@ class Solution(object):
                 ni, nj = i + di, j + dj
                 if 0 <= ni < m and 0 <= nj < n and grid[ni][nj] > current_value:
                     total_paths += _dfs(ni, nj)
-                
-            memo_path[i][j] = total_paths % mod
+                    
+            total_paths %= mod  
+            memo_path[i][j] = total_paths
             return total_paths
         
         # Start search from each element in the m*n grid.
@@ -30,7 +31,6 @@ class Solution(object):
         for i in range(m):
             for j in range(n):
                 total += _dfs(i, j)
-        
+                
         total %= mod  
-        
         return total
