@@ -6,25 +6,23 @@ class Solution(object):
         """
         
         m, n = len(grid), len(grid[0])
-        memo_path = [[-1] * n for _ in range(m)]
+        memo_path = [[0] * n for _ in range(m)]
         mod = 10**9 + 7
         
         def _dfs(i, j):
-            # If already computed, return the cached result
-            if memo_path[i][j] != -1:
+            if memo_path[i][j] != 0:
                 return memo_path[i][j]
             
             current_value = grid[i][j]
-            total_paths = 1  # Count the path starting from this cell
+            total_paths = 1 
             
             directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
             for di, dj in directions:
                 ni, nj = i + di, j + dj
                 if 0 <= ni < m and 0 <= nj < n and grid[ni][nj] > current_value:
                     total_paths += _dfs(ni, nj)
-                    total_paths %= mod  # To avoid overflow
+                    total_paths %= mod  
                 
-            # Cache the result for this cell
             memo_path[i][j] = total_paths
             return total_paths
         
@@ -33,11 +31,6 @@ class Solution(object):
         for i in range(m):
             for j in range(n):
                 total += _dfs(i, j)
-                total %= mod  # To keep the total within bounds
+                total %= mod  
         
         return total
-
-# Example usage:
-# grid = [[1, 2], [3, 4]]
-# sol = Solution()
-# print(sol.countPaths(grid))  # This will return the total number of increasing paths.
