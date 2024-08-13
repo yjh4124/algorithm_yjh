@@ -22,7 +22,7 @@ class Solution(object):
                     max_path_length = max(max_path_length, 1 + _dfs(ni, nj))
             
             memo_path[i][j] = max_path_length
-            return max_path_length
+            return memo_path[i][j]
         
         # Start search from each element in m*n matrix.
         for i in range(m):
