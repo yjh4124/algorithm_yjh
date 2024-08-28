@@ -1,8 +1,10 @@
+from collections import Counter
+
 class Solution:
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
         
         # Sort the words list
-        words.sort()
+        word_counter=Counter(words)
         
         # Length of each word and the number of words
         word_len=len(words[0])
@@ -32,7 +34,7 @@ class Solution:
                     substring_memo[i]=False
                     return False
             
-            return sorted(temp_words)==words
+            return Counter(temp_words)==word_counter
         
         # Iterate through possible starting indices
         for i in range(s_len-substring_len+1):
