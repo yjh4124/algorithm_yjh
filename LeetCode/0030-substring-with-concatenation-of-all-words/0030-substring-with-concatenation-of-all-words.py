@@ -4,7 +4,7 @@ class Solution:
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
         
         # Count frequency of each word in words
-        word_counter=Counter(words)
+        word_count=Counter(words)
         
         # Length of each word and the number of words
         word_len=len(words[0])
@@ -34,7 +34,7 @@ class Solution:
                     substring_memo[i]=False
                     return False
             
-            return Counter(temp_words)==word_counter
+            return Counter(temp_words)==word_count
         
         # Iterate through possible starting indices
         for i in range(s_len-substring_len+1):
