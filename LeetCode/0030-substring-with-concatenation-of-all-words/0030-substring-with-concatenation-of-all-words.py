@@ -2,44 +2,43 @@ from collections import Counter
 
 class Solution:
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        if not s or not words:
+            return []
         
-        # Sort the words list
-        word_counter=Counter(words)
+        word_len = len(words[0])
+        words_num = len(words)
+        substring_len = word_len * words_num
+        s_len = len(s)
         
-        # Length of each word and the number of words
-        word_len=len(words[0])
-        words_num=len(words)
+        # Count frequency of each word in words
+        word_count = Counter(words)
         
-        # Length of the concatenated substring and string s
-        substring_len=word_len*words_num
-        s_len=len(s)
-    
-        # Memoization for substring checks
-        substring_memo=[-1]*s_len
-        
-        # List to store starting indices of valid substrings
-        result_indices=[]
-        
-        def check_substring(start):
-            temp_words=[]
-            
-            for i in range(start, start+substring_len-word_len+1, word_len):
-                temp_word=substring_memo[i] \
-                    if substring_memo[i]!=-1 else s[i:i+word_len]
-                
-                if temp_word in words:
-                    substring_memo[i]=temp_word
-                    temp_words.append(temp_word)
+        result_indices = []
+
+        # Iterate through the string with a window equal to the length of a word
+        for i in range(word_len):
+            left = i
+            right = i
+            current_count = Counter()
+            while right + word_len <= s_len:
+                word = s[right:right + word_len]
+                right += word_len
+
+                if word in word_count:
+                    current_count[word] += 1
+
+                    # Move the left pointer to maintain valid counts
+                    while current_count[word] > word_count[word]:
+                        left_word = s[left:left + word_len]
+                        current_count[left_word] -= 1
+                        left += word_len
+
+                    # If the window size equals the substring length, it's a valid start
+                    if right - left == substring_len:
+                        result_indices.append(left)
                 else:
-                    substring_memo[i]=False
-                    return False
-            
-            return Counter(temp_words)==word_counter
-        
-        # Iterate through possible starting indices
-        for i in range(s_len-substring_len+1):
-            if substring_memo[i] is not False:
-                if check_substring(i):
-                    result_indices.append(i)
-            
+                    # Reset the window if word not in word_count
+                    current_count.clear()
+                    left = right
+
         return result_indices
