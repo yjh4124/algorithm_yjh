@@ -13,7 +13,7 @@ class Solution:
         boxes = [0] * 9
 
         # Preprocess the board to fill in the used digits bitmasks
-        def initialize():
+        def initialize_bitmasks():
             for i in range(9):
                 for j in range(9):
                     if board[i][j] != '.':
@@ -39,8 +39,8 @@ class Solution:
                         target_cell = (i, j)
             return target_cell
 
-        # Backtracking DFS to solve the Sudoku
-        def dfs():
+        # dfs to solve the Sudoku
+        def dfs_sudoku():
             cell_pos = find_most_constrained_cell()
             if cell_pos == (-1, -1):
                 return True  # No cells left to fill, puzzle solved
@@ -56,7 +56,7 @@ class Solution:
                     cols[j] |= bit
                     boxes[k] |= bit
 
-                    if dfs():
+                    if dfs_sudoku():
                         return True
 
                     # Revert changes if not solved
@@ -67,5 +67,5 @@ class Solution:
 
             return False
 
-        initialize()
-        dfs()
+        initialize_bitmasks()
+        dfs_sudoku()
