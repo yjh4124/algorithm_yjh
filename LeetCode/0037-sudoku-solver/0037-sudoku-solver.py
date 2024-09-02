@@ -37,14 +37,17 @@ class Solution:
                     cell = rows[i][j]
                     if cell.value == '.':
                         k = box_index(i, j)
-                        cell.possible_digits = DIGITS - used_digits(rows[i]) - used_digits(cols[j]) - used_digits(boxes[k])
+                        cell.possible_digits = DIGITS \
+                        - used_digits(rows[i]) \
+                        - used_digits(cols[j]) \
+                        - used_digits(boxes[k])
 
         # Get the used digits in a group
         def used_digits(group):
             return {cell.value for cell in group if cell.value != '.'}
         
         # Find the cell with the fewest possible digits
-        def find_most_constrained_cell() -> Tuple[int, int]:
+        def find_most_constrained_cell():
             min_options = 10  # More than the maximum possible options (9)
             target_cell = None
             for i in range(9):
@@ -79,7 +82,6 @@ class Solution:
         
         dfs_sudoku()
         
-        # Update the board with the solution
         for i in range(9):
             for j in range(9):
                 board[i][j] = rows[i][j].value
