@@ -59,8 +59,8 @@ class Solution:
                 
             # If no empty cell left, the board is solved
             else: 
-                for row in rows:
-                    print([cell.value for cell in row])
+                # for row in rows:
+                #     print([cell.value for cell in row])
                 return True
          
         
