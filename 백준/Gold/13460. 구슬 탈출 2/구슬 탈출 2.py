@@ -70,7 +70,7 @@ def get_new_position(red, blue, tilt):
     return red, blue
 
 
-def bfs_escape():
+def bfs_escape(red_pos, blue_pos):
     q = deque([[red_pos, blue_pos, 0, tilt] for tilt in tilt_map])
     visited = set()
     visited.add((red_pos, blue_pos))
@@ -95,6 +95,6 @@ def bfs_escape():
     return -1
 
 
-red_pos, blue_pos = initialize_board()
-result = bfs_escape()
+red_start, blue_start = initialize_board()
+result = bfs_escape(red_start, blue_start)
 print(result)
