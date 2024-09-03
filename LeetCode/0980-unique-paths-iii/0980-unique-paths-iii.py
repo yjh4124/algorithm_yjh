@@ -1,69 +1,56 @@
 class Solution:
     def uniquePathsIII(self, grid: List[List[int]]) -> int:
         
-        m, n=len(grid), len(grid[0])
-        visited=[[0]*n for _ in range(m)]
-        location=[-1,-1]
-        empty_cnt=0
-        paths_cnt=0
+        rows, cols=len(grid), len(grid[0])
+        visited=[[0]*cols for _ in range(rows)]
+        start=[-1,-1]
+        empty_cells=0
+        path_cnt=0
         
-        def visited_cnt():
+        def count_visited():
             return sum(sum(row) for row in visited)
         
-        def visited_on(i, j):
+        def mark_visited(i, j):
             visited[i][j]=1
             
-        def visited_off(i, j):
+        def unmark_visited(i, j):
             visited[i][j]=0   
         
         def is_visited(i, j):
             return visited[i][j]
         
       
-        def initialize_grid_info():
-            nonlocal empty_cnt
-            nonlocal location
+        def initialize_grid():
+            nonlocal empty_cells, start
             
-            for i in range(m):
-                for j in range(n):
+            for i in range(rows):
+                for j in range(cols):
                     if grid[i][j]==1:
-                        location=[i, j]
-                        visited_on(i, j)
-                        empty_cnt+=1
+                        start=[i, j]
+                        mark_visited(i, j)
+                        empty_cells+=1
                     elif grid[i][j]==0:
-                        empty_cnt+=1
+                        empty_cells+=1
                         
-        def dfs_paths():
-            nonlocal empty_cnt
-            nonlocal paths_cnt
-            nonlocal location
+        def dfs_paths(x, y):
+            nonlocal path_cnt
             
             # up, right, down, left
             directions=[(-1,0), (0,1), (1, 0), (0, -1)]
             
-            for di, dj in directions:
-                location[0]+=di
-                location[1]+=dj
-                i=location[0]
-                j=location[1]
-                if i<0 or i>=m or j<0 or j>=n: 
-                    location[0]-=di
-                    location[1]-=dj
-                    continue
-                    
-                if grid[i][j]==0 and not is_visited(i, j):
-                    visited_on(i, j)
-                    dfs_paths()
-                    visited_off(i, j)
-                elif grid[i][j]==2 and visited_cnt()==empty_cnt:
-                    paths_cnt+=1
+            for dx, dy in directions:
+                nx, ny= x+dx, y+dy
+                if 0 <= nx < rows and 0 <= ny < cols:
+                    if grid[nx][ny] == 0 and not is_visited(nx, ny):
+                        mark_visited(nx, ny)
+                        dfs_paths(nx, ny)
+                        unmark_visited(nx, ny)
+                    elif grid[nx][ny] == 2 and count_visited() == empty_cells:
+                        path_cnt += 1
                 
-                location[0]-=di
-                location[1]-=dj
-                
-        initialize_grid_info()
-        dfs_paths()
+        initialize_grid()
+        dfs_paths(start[0], start[1])
         
-        return paths_cnt
+        return path_cnt
         
             
