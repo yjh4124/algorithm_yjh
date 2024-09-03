@@ -6,15 +6,12 @@ class Solution:
         empty_cells=0
         
         def mark_visited(i, j):
-            nonlocal grid
             grid[i][j]=-1
             
         def unmark_visited(i, j):
-            nonlocal grid
             grid[i][j]=0   
         
         def is_visited(i, j):
-            nonlocal grid
             return grid[i][j]==-1
         
       
