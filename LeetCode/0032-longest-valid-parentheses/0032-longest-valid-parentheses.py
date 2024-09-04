@@ -1,20 +1,35 @@
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
         
-        stack=[-1]
-        max_len=0
-            
-        for i, char in enumerate(s):
+        left = right = 0
+        max_len = 0
+
+        # scan from left to right
+        for char in s:
             if char == '(':
-                stack.append(i)
-                continue
-                
-            stack.pop()
-            if not stack:
-                stack.append(i)
+                left += 1
             else:
-                 max_len = max(max_len, i - stack[-1])
+                right += 1
             
+            if left == right:
+                max_len = max(max_len, 2 * right)
+            elif right > left:
+                left = right = 0  
+
+        left = right = 0
+
+        # scan from right to left
+        for char in reversed(s):
+            if char == ')':
+                right += 1
+            else:
+                left += 1
+            
+            if left == right:
+                max_len = max(max_len, 2 * left)
+            elif left > right:
+                left = right = 0  
+
         return max_len
         
         
