@@ -27,7 +27,7 @@ def dfs_travel(city, visited_bitmask):
         travel_cost = move_cost(city, 0)
         return travel_cost if travel_cost else INF
 
-    if min_total_cost_memo.get((city, visited_bitmask), None) is not None:
+    if (city, visited_bitmask) in min_total_cost_memo:
         return min_total_cost_memo[(city, visited_bitmask)]
 
     min_total_cost = INF
