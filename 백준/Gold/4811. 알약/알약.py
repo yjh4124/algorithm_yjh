@@ -9,10 +9,7 @@ from collections import deque
 def count_possible_schedules(n):
     possible_schedules_momo = {}
     for i in range(n):
-        for j in range(n):
-            if i + j > n:
-                continue
-
+        for j in range(n - i + 1):
             state = (i, j)
             log = "w"
             log_memo = set(log)
