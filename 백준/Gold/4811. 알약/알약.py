@@ -10,15 +10,15 @@ def count_possible_schedules(n):
     possible_schedules_momo = {}
     for i in range(n):
         for j in range(n):
-            if i == 0 and j == 0 or i + j > n:
+            if i + j > n:
                 continue
 
-            initial_state = (i, j)
-            initial_log = "w"
-            log_memo = set(initial_log)
+            state = (i, j)
+            log = "w"
+            log_memo = set(log)
             possible_schedules_cnt = 0
 
-            queue = deque([(initial_state, initial_log)])
+            queue = deque([(state, log)])
 
             while queue:
                 (w_cnt, h_cnt), log = queue.popleft()
@@ -26,7 +26,7 @@ def count_possible_schedules(n):
                 if (w_cnt, h_cnt) in possible_schedules_momo:
                     possible_schedules_cnt += possible_schedules_momo[(w_cnt, h_cnt)]
                     continue
-                
+
                 for drug in ["w", "h"]:
                     new_log = None
                     if drug == "w" and w_cnt:
@@ -44,7 +44,7 @@ def count_possible_schedules(n):
                             queue.append((new_state, new_log))
                             log_memo.add(new_log)
 
-            possible_schedules_momo[initial_state] = possible_schedules_cnt
+            possible_schedules_momo[state] = possible_schedules_cnt
     return possible_schedules_momo.get((n - 1, 1), 1)
 
 
