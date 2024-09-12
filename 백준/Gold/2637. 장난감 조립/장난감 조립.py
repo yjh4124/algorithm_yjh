@@ -1,76 +1,53 @@
+
 import sys
+
+input = sys.stdin.readline
+
 from collections import deque
 
-n=int(input())
 
-m=int(input())
+def get_product_costs(num_parts, dependencies):
+    graph = [[] for _ in range(num_parts + 1)]
+    indegree = [0] * (num_parts + 1)
 
-data=[]
+    # 상위 부품과 하위 부품 간의 의존성 그래프 설정
+    for part, base, qty in dependencies:
+        graph[base].append((part, qty))
+        indegree[part] += 1
 
-for _ in range(m):
-    x, y, k=map(int, input().split())
-    data.append((x, y, k))
+    # 기본 부품 찾기
+    base_parts = [i for i in range(1, num_parts + 1) if indegree[i] == 0]
+    num_base_parts = len(base_parts)
 
-# for i in data[:m//2]:
-#     print(i, end='')
-# print()
-# for i in data[m//2:]:
-#     print(i, end='')
-# print()
+    queue = deque(base_parts)
 
-graph=[[] for _ in range(n+1)]
+    # 각 부품의 기본 부품 비용을 저장하는 배열
+    cost = [[0] * num_base_parts for _ in range(num_parts + 1)]
 
-degree=[0 for _ in range(n+1)]
+    # 기본 부품의 초기 비용 설정
+    for idx, part in enumerate(base_parts):
+        cost[part][idx] = 1
 
-# for i in graph:
-#     print(i)
+    # 위상 정렬을 사용한 부품 비용 계산
+    while queue:
+        current_part = queue.popleft()
 
-for x, y, k in data:
-    graph[y].append([x,k])
-    degree[x]+=1
+        for next_part, qty in graph[current_part]:
+            for idx in range(num_base_parts):
+                cost[next_part][idx] += cost[current_part][idx] * qty
+            indegree[next_part] -= 1
+            if indegree[next_part] == 0:
+                queue.append(next_part)
 
-# print(degree)
-check_root=degree.count(0)-1
-# print(check_root)
-# print(graph)
+    result = [(base_parts[idx], cost[num_parts][idx]) for idx in range(num_base_parts)]
+    return result
 
-queue=deque()
 
-for i in range(1,len(degree)):
-    if degree[i]==0:
-        queue.append(i)
+n = int(input())
+m = int(input())
+assembly_data = [tuple(map(int, input().split())) for _ in range(m)]
 
-# print(queue)
 
-cost=[[0]*check_root for _ in range(n+1)]
-
-cnt=0
-id=[]
-for i in range(1,len(degree)):
-    if degree[i]==0:
-        id.append(i)
-        cost[i][cnt]=1
-        cnt+=1
-
-# print(cost)
-# cnt=0
-while queue:
-    # cnt+=1
-    part=queue.popleft()
-    
-    for assy, ea in graph[part]:
-        for j in range(check_root):
-            cost[assy][(j)%check_root]+=cost[part][(j)%check_root]*ea
-        degree[assy]-=1
-        if degree[assy]==0:
-            queue.append(assy)
-
-    # print(degree)
-    # print(queue)
-    # print(cost)
-    
-
-    # if cnt==7: break
-
-for i in range(len(cost[n])):
-    print(f'{id[i]} {cost[n][i]}')
+results = get_product_costs(n, assembly_data)
+for part, qty in results:
+    print(f"{part} {qty}")
