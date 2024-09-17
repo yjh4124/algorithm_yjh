@@ -1,4 +1,3 @@
-
 import sys
 
 input = sys.stdin.readline
@@ -15,11 +14,10 @@ GRID_SIZE = 101
 grid = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
 
 
-def make_dragon_curve(data):
+def generate_dragon_curves(data):
     for y, x, d, g in data:
 
-        curve_points = []
-        curve_points.append((x, y))
+        curve_points = [(x, y)]
         curve_points.append((x + dx[d], y + dy[d]))
 
         grid[x][y] = 1
@@ -54,5 +52,5 @@ def count_squares():
     return cnt
 
 
-make_dragon_curve(data)
+generate_dragon_curves(data)
 print(count_squares())
