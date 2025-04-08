@@ -1,72 +1,54 @@
-
 import sys
 from typing import TypedDict, Optional
 
 input = sys.stdin.readline
 
 class Command(TypedDict):
-    command:str
-    value:Optional[str]
+    type: str
+    arg: Optional[str]
 
-class BaseEditor:
-    def __init__(self, text: str):
-        self.left = list(text)  
-        self.right = []         
+class TextEditor:
+    def __init__(self, initial_text: str):
+        self.left_stack = list(initial_text)
+        self.right_stack = []
 
-    def move_cursor_left(self):
-        if self.left:
-            self.right.append(self.left.pop())
+    def move_left(self):
+        if self.left_stack:
+            self.right_stack.append(self.left_stack.pop())
 
-    def move_cursor_right(self):
-        if self.right:
-            self.left.append(self.right.pop())
+    def move_right(self):
+        if self.right_stack:
+            self.left_stack.append(self.right_stack.pop())
 
-    def delete_char(self):
-        if self.left:
-            self.left.pop()
+    def delete_left(self):
+        if self.left_stack:
+            self.left_stack.pop()
 
-    def insert_char(self, char: str):
-        self.left.append(char)
+    def insert(self, char: str):
+        self.left_stack.append(char)
 
     def get_text(self) -> str:
-        return ''.join(self.left + self.right[::-1])
+        return ''.join(self.left_stack + list(reversed(self.right_stack)))
 
+    def execute(self, command: Command):
+        match command["type"]:
+            case "L": self.move_left()
+            case "D": self.move_right()
+            case "B": self.delete_left()
+            case "P": self.insert(command["arg"])
+            case _: pass
 
-    def edit(self, command:Command)->None:
-        cmd=command['command']
-        val=command['value']
-        match cmd:
-            case 'L':
-                self.move_cursor_left()
-            case 'D':
-                self.move_cursor_right()
-            case 'B':
-                self.delete_char()
-            case 'P':
-                self.insert_char(val)
-            case _:
-                pass
+def parse_command(line: str) -> Command:
+    parts = line.split()
+    return {"type": parts[0], "arg": parts[1] if len(parts) > 1 else None}
 
+initial_text = input().strip()
+command_count = int(input().strip())
 
-def parse_command(line:str)->Command:
-    tokens=line.split()
-    return Command(command=tokens[0], value=tokens[1] if len(tokens)>1 else None)
-
-
-text=input().strip()
-command_count=int(input().strip())
-
-editor=BaseEditor(text)
+editor = TextEditor(initial_text)
 
 for _ in range(command_count):
-    command=parse_command(input().strip())
-    editor.edit(command)
+    cmd = parse_command(input().strip())
+    editor.execute(cmd)
 
 print(editor.get_text())
-
-
-
-
-
-
-
