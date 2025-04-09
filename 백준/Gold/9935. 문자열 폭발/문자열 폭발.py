@@ -1,17 +1,17 @@
-
 import sys
-
 input = sys.stdin.readline
 
-def remove_bomb_word(text: str, bomb_word: str) -> str:
+def remove_bomb(text: str, bomb: str) -> str:
     stack = []
+    bomb_len = len(bomb)
+
     for char in text:
         stack.append(char)
-        if len(stack) >= len(bomb_word) and ''.join(stack[-len(bomb_word):]) == bomb_word:
-            for _ in range(len(bomb_word)):
-                stack.pop()
-    return ''.join(stack)
+        if len(stack) >= bomb_len and ''.join(stack[-bomb_len:]) == bomb:
+            del stack[-bomb_len:] 
+
+    return ''.join(stack) or "FRULA"
 
 text = input().strip()
-bomb_word = input().strip()
-print(remove_bomb_word(text, bomb_word) or "FRULA")
+bomb = input().strip()
+print(remove_bomb(text, bomb))
